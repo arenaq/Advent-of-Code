@@ -1,5 +1,7 @@
 package Year2016;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.*;
@@ -9,6 +11,8 @@ import java.util.function.Consumer;
  * Created by arenaq on 04.12.2016.
  */
 public class Day4 {
+    static List<String> list_names;
+    static List<Integer> list_ids;
     static long sum = 0;
 
     static <K extends Comparable<? super K>,V extends Comparable<? super V>>
@@ -38,11 +42,14 @@ public class Day4 {
     }
 
     static void parseLine(String line) {
+        String name = "";
         HashMap<Character, Integer> map = new HashMap<>();
         StringTokenizer st = new StringTokenizer(line, "-");
         int count = st.countTokens();
         for (int i = 0; i < count - 1; i++) {
             String s = st.nextToken();
+            name += s;
+            if (i != count - 1) name += " ";
             for (int j = 0; j < s.length(); j++) {
                 char c = s.charAt(j);
                 map.putIfAbsent(c, 0);
@@ -64,7 +71,11 @@ public class Day4 {
         st = new StringTokenizer(s, "[]");
         int ID = Integer.parseInt(st.nextToken());
         String checksum = st.nextToken();
-        if (five.compareTo(checksum) == 0) sum += ID;
+        if (five.compareTo(checksum) == 0) {
+            list_names.add(name);
+            list_ids.add(ID);
+            sum += ID;
+        }
     }
 
     public static void main(String[] args) {
@@ -1015,6 +1026,8 @@ public class Day4 {
                 "kpvgtpcvkqpcn-dwppa-rwtejcukpi-336[pcktv]\n" +
                 "hwbba-gii-eqpvckpogpv-492[pbgiv]\n" +
                 "zsxyfgqj-hqfxxnknji-idj-xytwflj-359[jxfin]";
+        list_names = new LinkedList<>();
+        list_ids = new LinkedList<>();
         new BufferedReader(new StringReader(input)).lines().forEach(new Consumer<String>() {
             @Override
             public void accept(String s) {
@@ -1023,5 +1036,17 @@ public class Day4 {
         });
 
         System.out.println(sum);
+
+        for (int i = 0; i < list_names.size(); i++) {
+            String name = list_names.get(i);
+            String result = "";
+            int ID = list_ids.get(i);
+            for (int k = 0; k < name.length(); k++) {
+                char c = name.charAt(k);
+                int m = Character.getNumericValue(c) + ID;
+                result += Character.forDigit(((m - 10) % 26) + 10, 36);
+            }
+            System.out.println(result + " : " + ID);
+        }
     }
 }
