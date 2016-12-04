@@ -11,11 +11,7 @@ import java.util.function.Consumer;
 public class Day3 {
     static int count = 0;
 
-    static boolean isValid(String line) {
-        StringTokenizer st = new StringTokenizer(line, " ");
-        int A = Integer.parseInt(st.nextToken());
-        int B = Integer.parseInt(st.nextToken());
-        int C = Integer.parseInt(st.nextToken());
+    static boolean isValid(int A, int B, int C) {
         if (A + B <= C) return false;
         if (B + C <= A) return false;
         if (A + C <= B) return false;
@@ -1937,7 +1933,47 @@ public class Day3 {
         new BufferedReader(new StringReader(input)).lines().forEach(new Consumer<String>() {
             @Override
             public void accept(String s) {
-                if (isValid(s)) count++;
+                StringTokenizer st = new StringTokenizer(s, " ");
+                int A = Integer.parseInt(st.nextToken());
+                int B = Integer.parseInt(st.nextToken());
+                int C = Integer.parseInt(st.nextToken());
+                if (isValid(A, B, C)) count++;
+            }
+        });
+        System.out.println(count);
+
+        /* Second part */
+        count = 0;
+        new BufferedReader(new StringReader(input)).lines().forEach(new Consumer<String>() {
+            int i = 0;
+            int A1, B1, C1;
+            int A2, B2, C2;
+            int A3, B3, C3;
+
+            @Override
+            public void accept(String s) {
+                StringTokenizer st = new StringTokenizer(s, " ");
+                switch(i) {
+                    case 0:
+                        A1 = Integer.parseInt(st.nextToken());
+                        B1 = Integer.parseInt(st.nextToken());
+                        C1 = Integer.parseInt(st.nextToken());
+                        break;
+                    case 1:
+                        A2 = Integer.parseInt(st.nextToken());
+                        B2 = Integer.parseInt(st.nextToken());
+                        C2 = Integer.parseInt(st.nextToken());
+                        break;
+                    case 2:
+                        A3 = Integer.parseInt(st.nextToken());
+                        B3 = Integer.parseInt(st.nextToken());
+                        C3 = Integer.parseInt(st.nextToken());
+                        if (isValid(A1, A2, A3)) count++;
+                        if (isValid(B1, B2, B3)) count++;
+                        if (isValid(C1, C2, C3)) count++;
+                        break;
+                }
+                i = ++i % 3;
             }
         });
         System.out.println(count);
