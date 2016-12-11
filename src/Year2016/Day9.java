@@ -51,13 +51,43 @@ public class Day9 {
         return false;
     }
 
+    static long decompress2(String in) {
+        boolean readingMarker = false;
+        String marker = "";
+        long result = 0;
+
+        for (int i = 0; i < in.length(); i++) {
+            char c = in.charAt(i);
+            switch (c) {
+                case '(':
+                    readingMarker = true;
+                    break;
+                case ')':
+                    StringTokenizer st = new StringTokenizer(marker, "x");
+                    int A = Integer.parseInt(st.nextToken());
+                    int B = Integer.parseInt(st.nextToken());
+                    String s = in.substring(i + 1, i + 1 + A);
+                    result += B * (isCompressed(s) ? decompress2(s) : s.length());
+                    i += A;
+                    marker = "";
+                    readingMarker = false;
+                    break;
+                default:
+                    if (readingMarker) {
+                        marker += c;
+                    } else {
+                        result++;
+                    }
+                    break;
+            }
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         String result = decompress(in);
         System.out.println(result.length());
-        
-        while (isCompressed(result)) {
-            result = decompress(result);
-        }
-        System.out.println(result.length());
+        System.out.println(decompress2(in));
     }
 }
