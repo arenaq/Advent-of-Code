@@ -393,5 +393,19 @@ public class Day10 {
                 }
             }
         }
+        int result = 1;
+        Output output0 = outputs.get(0);
+        Output output1 = outputs.get(1);
+        Output output2 = outputs.get(2);
+        for (Integer i : output0.values) {
+            result *= i;
+        }
+        for (Integer i : output1.values) {
+            result *= i;
+        }
+        for (Integer i : output2.values) {
+            result *= i;
+        }
+        System.out.println(result);
     }
 }
