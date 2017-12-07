@@ -23,10 +23,10 @@ public class Day6 {
         for (int i = 0; i < memory.length; i++) {
             memory[i] = Integer.parseInt(st.nextToken());
         }
-        HashMap<String, Boolean> map = new HashMap<>();
+        HashMap<String, Integer> map = new HashMap<>();
         int result = 0;
         while (map.get(aIntToString(memory)) == null) {
-            map.put(aIntToString(memory), true);
+            map.put(aIntToString(memory), result);
             int max = Integer.MIN_VALUE;
             int max_index = 0;
             for (int i = 0; i < memory.length; i++) {
@@ -44,5 +44,7 @@ public class Day6 {
             result++;
         }
         System.out.println(result);
+        // part 2
+        System.out.println(result - map.get(aIntToString(memory)));
     }
 }
