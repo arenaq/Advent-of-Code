@@ -12,6 +12,7 @@ public class Day9 {
 
     public static void main(String[] args) {
         int result = 0;
+        int result2 = 0;
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
             if (garbage) {
@@ -19,11 +20,15 @@ public class Day9 {
                     ignore = false;
                     continue;
                 }
-                if (c == '!') {
-                    ignore = true;
-                }
-                if (c == '>') {
-                    garbage = false;
+                switch (c) {
+                    case '!':
+                        ignore = true;
+                        break;
+                    case '>':
+                        garbage = false;
+                        break;
+                    default:
+                        result2++;
                 }
             } else {
                 switch (c) {
@@ -44,5 +49,6 @@ public class Day9 {
             }
         }
         System.out.println(result);
+        System.out.println(result2);
     }
 }
