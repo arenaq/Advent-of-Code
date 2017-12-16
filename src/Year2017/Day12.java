@@ -25,15 +25,22 @@ public class Day12 {
                 map.put(i, edges);
             }
         });
-        HashSet<Integer> used = new HashSet<>();
-        System.out.println(deepSearch(map, used, 0));
+        Set<Integer> notUsed = new HashSet<>(map.keySet());
+        System.out.println(deepSearch(map, notUsed, 0));
+        // part 2
+        int components = 1;
+        while (!notUsed.isEmpty()) {
+            deepSearch(map, notUsed, (int)notUsed.toArray()[0]);
+            components++;
+        }
+        System.out.println(components);
     }
 
-    static int deepSearch(HashMap<Integer, Set<Integer>> map, HashSet<Integer> used, int from) {
+    static int deepSearch(HashMap<Integer, Set<Integer>> map, Set<Integer> notUsed, int from) {
         int result = 1;
-        used.add(from);
+        notUsed.remove(from);
         for (Integer vertex : map.get(from)) {
-            if (!used.contains(vertex)) result += deepSearch(map, used, vertex);
+            if (notUsed.contains(vertex)) result += deepSearch(map, notUsed, vertex);
         }
         return result;
     }
