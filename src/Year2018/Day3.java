@@ -27,5 +27,26 @@ public class Day3 {
             }
         }
         System.out.println(result);
+        for (String entry : inputArray) {
+            String[] entryArray = entry.split(" ");
+            String[] coords = entryArray[2].split(",");
+            int x = Integer.valueOf(coords[0]);
+            int y = Integer.valueOf(coords[1].substring(0, coords[1].length() - 1));
+            String[] dimens = entryArray[3].split("x");
+            int width = Integer.valueOf(dimens[0]);
+            int height = Integer.valueOf(dimens[1]);
+            boolean overlaps = false;
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    if (fabric[x + i][y + j] > 1) {
+                        overlaps = true;
+                    }
+                }
+            }
+            if (!overlaps) {
+                System.out.println(entryArray[0]);
+                break;
+            }
+        }
     }
 }
