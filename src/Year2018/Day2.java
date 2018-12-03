@@ -28,5 +28,25 @@ public class Day2 {
             if (isThree) three++;
         }
         System.out.println(two * three);
+        // Day 2
+        for (int i = 0; i < inputArray.length - 1; i++) {
+            for (int j = i + 1; j < inputArray.length; j++) {
+                String entry1 = inputArray[i];
+                String entry2 = inputArray[j];
+                int difference = 0;
+                StringBuilder result = new StringBuilder();
+                for (int k = 0; k < entry1.length(); k++) {
+                    if (entry1.charAt(k) == entry2.charAt(k)) {
+                        result.append(entry1.charAt(k));
+                    } else {
+                        difference++;
+                    }
+                    if (difference > 1) break;
+                }
+                if (difference <= 1) {
+                    System.out.println(result);
+                }
+            }
+        }
     }
 }
