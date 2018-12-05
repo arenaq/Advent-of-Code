@@ -52,5 +52,24 @@ public class Day16 {
             }
         }
         System.out.println(String.valueOf(programs));
+        // part2 - wont work this way, cause of partner rule
+        char[] origin = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'};
+        int[] mapping = new int[programs.length];
+        for (int i = 0; i < mapping.length; i++) {
+            char c = programs[i];
+            for (int j = 0; j < programs.length; j++) {
+                if (c == origin[j]) {
+                    mapping[i] = j;
+                }
+            }
+        }
+        for (int i = 0; i < 1; i++) {
+            char[] tmp = new char[programs.length];
+            for (int j = 0; j < tmp.length; j++) {
+                tmp[j] = programs[mapping[j]];
+            }
+            programs = tmp;
+        }
+        System.out.println(String.valueOf(programs));
     }
 }
