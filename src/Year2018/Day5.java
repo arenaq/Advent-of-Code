@@ -8,6 +8,13 @@ public class Day5 {
 
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder(input);
+        int result = getPolymerLength(sb);
+        System.out.println(result);
+        result = getShortestPolymerLength(sb);
+        System.out.println(result);
+    }
+
+    private static int getPolymerLength(StringBuilder sb) {
         boolean changed = true;
         while (changed) {
             changed = false;
@@ -22,6 +29,16 @@ public class Day5 {
                 }
             }
         }
-        System.out.println(sb.length());
+        return sb.length();
+    }
+
+    private static int getShortestPolymerLength(StringBuilder sb) {
+        int minLength = Integer.MAX_VALUE;
+        for (int i = 'A'; i <= 'Z'; i++) {
+            String s = sb.toString().replace(Character.toString((char) i), "").replace(Character.toString((char) (i+32)), "");
+            int length = getPolymerLength(new StringBuilder(s));
+            if (minLength > length) minLength = length;
+        }
+        return minLength;
     }
 }
