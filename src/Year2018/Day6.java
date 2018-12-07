@@ -32,6 +32,7 @@ public class Day6 {
         }
         int width = rightBottom.x - leftTop.x + 1;
         int height = rightBottom.y - leftTop.y + 1;
+        int result2 = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 boolean valid = true;
@@ -40,14 +41,17 @@ public class Day6 {
                 int minDistance = Integer.MAX_VALUE;
                 int secMinDistance = Integer.MAX_VALUE;
                 Point bestPoint = null;
+                int distanceSum = 0;
                 for (Point point : points) {
                     int distance = manhattanDistance(x + leftTop.x, y + leftTop.y, point);
+                    distanceSum += distance;
                     if (distance <= minDistance) {
                         secMinDistance = minDistance;
                         minDistance = distance;
                         bestPoint = point;
                     }
                 }
+                if (distanceSum < 10000) result2++;
                 if (minDistance == secMinDistance) continue;
                 bestPoint.score++;
                 bestPoint.valid = valid;
@@ -63,6 +67,7 @@ public class Day6 {
             }
         }
         System.out.println(result.score);
+        System.out.println(result2);
     }
 
     static private int manhattanDistance(int x, int y, Point a) {
