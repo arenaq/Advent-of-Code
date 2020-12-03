@@ -6,6 +6,7 @@ public class Day2 {
     public static void main(String[] args) {
         String[] array = input.split(",");
         int correctPasswords = 0;
+        int correctPasswords2 = 0;
         for (int i = 0; i < array.length; i++) {
             String[] line = array[i].split(" ");
             String[] policy = line[0].split("-");
@@ -19,7 +20,12 @@ public class Day2 {
                 if (c == policyChar) count++;
             }
             if (count >= policyMin && count <= policyMax) correctPasswords++;
+            if ((password.charAt(policyMin-1) == policyChar && password.charAt(policyMax-1) != policyChar) ||
+                    (password.charAt(policyMin-1) != policyChar && password.charAt(policyMax-1) == policyChar)) {
+                correctPasswords2++;
+            }
         }
         System.out.println(correctPasswords);
+        System.out.println(correctPasswords2);
     }
 }
