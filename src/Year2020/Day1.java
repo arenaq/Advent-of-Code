@@ -10,8 +10,13 @@ public class Day1 {
             for (int j = 1; j < array.length; j++) {
                 int b = Integer.valueOf(array[j]);
                 if (a + b == 2020) {
-                    System.out.println(a * b);
-                    return;
+                    System.out.println("part 1: " + a * b);
+                }
+                for (int k = 2; k < array.length; k++) {
+                    int c = Integer.valueOf(array[k]);
+                    if (a + b + c == 2020) {
+                        System.out.println("part 2: " + a * b * c);
+                    }
                 }
             }
         }
