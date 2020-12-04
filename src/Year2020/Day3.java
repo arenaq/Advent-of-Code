@@ -10,7 +10,15 @@ public class Day3 {
         array = input.split(",");
         height = array.length;
         width = array[0].length();
-        System.out.println(howManyTreesAtAngle(0, 0, 3, 1));
+        int part1 = howManyTreesAtAngle(0, 0, 3, 1);
+        System.out.println(part1);
+        long part2 = 1;
+        part2 *= howManyTreesAtAngle(0, 0, 1, 1);
+        part2 *= part1;
+        part2 *= howManyTreesAtAngle(0, 0, 5, 1);
+        part2 *= howManyTreesAtAngle(0, 0, 7, 1);
+        part2 *= howManyTreesAtAngle(0, 0, 1, 2);
+        System.out.println(part2);
     }
 
     static int howManyTreesAtAngle(int x, int y, int dx, int dy) {
