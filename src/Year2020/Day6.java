@@ -9,18 +9,28 @@ public class Day6 {
     public static void main(String[] args) {
         String[] groups = input.split(",");
         int part1 = 0;
+        int part2 = 0;
         for (int i = 0; i < groups.length; i++) {
-            Map<Integer, Boolean> map = new HashMap<>();
+            Map<Integer, Integer> map = new HashMap<>();
             String[] answers = groups[i].split("-");
             for (int j = 0; j < answers.length; j++) {
                 String answer = answers[j];
                 for (int k = 0; k < answer.length(); k++) {
                     char c = answer.charAt(k);
-                    map.put((int)c, true);
+                    if (map.get((int)c) == null) {
+                        map.put((int)c, 1);
+                    } else {
+                        int v = map.get((int)c);
+                        map.put((int)c, ++v);
+                    }
                 }
             }
             part1 += map.keySet().size();
+            for (int value : map.values()) {
+                if (value == answers.length) part2++;
+            }
         }
         System.out.println(part1);
+        System.out.println(part2);
     }
 }
