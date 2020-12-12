@@ -12,10 +12,28 @@ public class Day9 {
             numbers[i] = Long.valueOf(array[i]);
         }
 
+        long part1 = 0;
         for (int i = PREAMBLE_SIZE; i < array.length; i++) {
             if (!isValid(i, numbers)) {
-                System.out.println(numbers[i]);
+                part1 = numbers[i];
                 break;
+            }
+        }
+        System.out.println(part1);
+        // part 2
+        for (int i = 0; i < numbers.length; i++) {
+            long min = numbers[i];
+            long max = numbers[i];
+            long sum = numbers[i];
+            for (int j = i + 1; j < numbers.length; j++) {
+                long number = numbers[j];
+                if (number < min) min = number;
+                if (number > max) max = number;
+                sum += number;
+                if (part1 == sum) {
+                    System.out.println(min + max);
+                }
+                if (sum > part1) break;
             }
         }
     }
