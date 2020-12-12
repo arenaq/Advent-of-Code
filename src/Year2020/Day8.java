@@ -32,5 +32,37 @@ public class Day8 {
             }
         }
         System.out.println(acc);
+        // part 2
+        for (int i = 0; i < array.length; i++) {
+            if (instruction[i] == 'a') continue;
+            char[] inst_alt = instruction.clone();
+            if (instruction[i] == 'n') {
+                inst_alt[i] = 'j';
+            } else {
+                inst_alt[i] = 'n';
+            }
+            visited = new boolean[array.length];
+            next = 0;
+            acc = 0;
+
+            while (next >= 0 && next < array.length) {
+                if (visited[next]) break;
+                visited[next] = true;
+                switch (inst_alt[next]) {
+                    case 'j':
+                        next += value[next];
+                        break;
+                    case 'a':
+                        acc += value[next];
+                    case 'n':
+                        next++;
+                        break;
+                }
+            }
+            if (next == array.length) {
+                System.out.println(acc);
+                break;
+            }
+        }
     }
 }
