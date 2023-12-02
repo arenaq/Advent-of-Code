@@ -13,18 +13,31 @@ fun main() {
     )
     val lines = input.split("|")
     var sum = 0
+    var sumOfPower = 0
     lines.forEach { line -> // Game 1: 7 blue, 4 red, 11 green; 2 red, 2 blue, 7 green; 2 red, 13 blue, 8 green; 18 blue, 7 green, 5 red
         val gameNumber = line.split(":")[0].split(" ")[1].toInt()
         var possible = true
+        val minColorMap: HashMap<String, Int> = hashMapOf(
+            "red" to 0,
+            "green" to 0,
+            "blue" to 0,
+        )
         val games = line.split(": ")[1].split("; ")
         games.forEach { game -> // 7 blue, 4 red, 11 green
             val colors = game.split(", ")
             colors.forEach { color -> // 7 blue
                 val colorSplit = color.split(" ")
                 if (colorSplit[0].toInt() > maxColorMap[colorSplit[1]]!!) possible = false
+                if (colorSplit[0].toInt() > minColorMap[colorSplit[1]]!!) minColorMap[colorSplit[1]] = colorSplit[0].toInt()
             }
         }
         if (possible) sum += gameNumber
+        var power = 1
+        minColorMap.values.forEach { value ->
+            power *= value
+        }
+        sumOfPower += power
     }
     println(sum)
+    println(sumOfPower)
 }
