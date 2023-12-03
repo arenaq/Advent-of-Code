@@ -29,7 +29,8 @@ fun main() {
             }
         }
     }
-    var sum = 0
+    var sum = 0L
+    val symbols = HashMap<String, LinkedList<String>>()
     for (number in numbers) {
         val positionsToCheck = LinkedList<Position>()
         val previousCharIndex = number.position.charIndex - 1
@@ -52,11 +53,21 @@ fun main() {
             val char = lines.getXY(position.lineIndex, position.charIndex)
             if (!char.isDigit() && char != '.') {
                 isPartNumber = true
-                break
+                val pos = position.lineIndex.toString() + "|" + position.charIndex.toString()
+                val list = symbols[pos] ?: LinkedList()
+                list.add(number.value)
+                symbols[pos] = list
             }
         }
         if (isPartNumber) {
             sum += number.value.toInt()
+        }
+    }
+    println(sum)
+    sum = 0L
+    for (list in symbols.values) {
+        if (list.size == 2) {
+            sum += list[0].toInt() * list[1].toInt()
         }
     }
     println(sum)
