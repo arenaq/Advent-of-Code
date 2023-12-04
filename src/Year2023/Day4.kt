@@ -6,13 +6,17 @@ fun main() {
         .replace("\\s+".toRegex(), " ") // replace multiple spaces with a single space
         .split(",")
     var points = 0
+    val scratchcards = IntArray(lines.size) {1}
     lines.forEach { line ->
         val parts = line.split(":", "|")
+        val cardNumber = parts[0].split(" ")[1].toInt()
         val winningNumbers = parts[1].trim().split(" ")
         val numbersYouHave = parts[2].trim().split(" ")
         var cardWorth = 0
+        var matchingCount = 0
         for (number in numbersYouHave) {
             if (winningNumbers.contains(number)) {
+                matchingCount++
                 if (cardWorth == 0) {
                     cardWorth = 1
                 } else {
@@ -21,6 +25,13 @@ fun main() {
             }
         }
         points += cardWorth
+        if (matchingCount > 0) {
+            for (i in 1..matchingCount) {
+                val newCardNumber = cardNumber + i
+                scratchcards[newCardNumber - 1] += scratchcards[cardNumber - 1]
+            }
+        }
     }
     println(points)
+    println(scratchcards.sum())
 }
