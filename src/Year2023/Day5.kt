@@ -24,6 +24,24 @@ fun main() {
         locations.add(location)
     }
     println(locations.min())
+    locations.clear()
+    var min = Long.MAX_VALUE
+    var size = 0L
+    seeds.windowed(2, 2).forEach { range ->
+        for (seed in range[0]..<range[0] + range[1]) {
+            val soil = map(mapSeed2Soil, seed)
+            val fertilizer = map(mapSoil2Fertilizer, soil)
+            val water = map(mapFertilizer2Water, fertilizer)
+            val light = map(mapWater2Light, water)
+            val temperature = map(mapLight2Temperature, light)
+            val humidity = map(mapTemperature2Humidity, temperature)
+            val location = map(mapHumidity2Location, humidity)
+            if (location < min) min = location
+            size++
+        }
+    }
+    println("total number of locations=$size")
+    println("part 2 result=$min")
 }
 
 fun map(map: List<List<Long>>, input: Long): Long {
