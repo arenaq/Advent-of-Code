@@ -17,6 +17,21 @@ fun main() {
             val value = cardsMap[card] ?: 0
             cardsMap[card] = value + 1
         }
+        var bestCardCount = 0
+        var bestCard = 'A'
+        cardsMap.toList().filter { c -> c.first != 'J' }.sortedWith { c1, c2 -> Hand.charToInt(c2.first).compareTo(Hand.charToInt(c1.first)) }.forEach {
+            if (it.second > bestCardCount) {
+                bestCard = it.first
+                bestCardCount = it.second
+            }
+        }
+        if (bestCard == 'J') bestCard = 'A'
+        val alteredCards = cards.replace('J', bestCard)
+        cardsMap.clear()
+        alteredCards.forEach { card ->
+            val value = cardsMap[card] ?: 0
+            cardsMap[card] = value + 1
+        }
         val hand = Hand(cards, bid.toInt())
         cardsMap.forEach { entry ->
             hand.add(Pair(entry.key, entry.value))
@@ -29,6 +44,7 @@ fun main() {
     }.forEachIndexed { i, it ->
         winnings += (i+1) * it.bid
     }
+    // part 2 result
     println(winnings)
 }
 
@@ -114,7 +130,6 @@ class Hand(
                 'A' -> 14
                 'K' -> 13
                 'Q' -> 12
-                'J' -> 11
                 'T' -> 10
                 '9' -> 9
                 '8' -> 8
@@ -124,6 +139,7 @@ class Hand(
                 '4' -> 4
                 '3' -> 3
                 '2' -> 2
+                'J' -> 1
                 else -> 0
             }
         }
