@@ -61,6 +61,9 @@ fun main() {
     var currX = startX
     var currY = startY
     var steps = 0
+    var pipePositions = mutableSetOf(
+        Pair(currX, currX)
+    )
     do {
         val moveVector = mapDirection.get(currDir)!!
         currX += moveVector.first
@@ -68,6 +71,22 @@ fun main() {
         val currPipe = array[currY][currX]
         currDir = mapOfPipes.get(currPipe)?.get(currDir)
         steps++
+        pipePositions.add(Pair(currX, currY))
     } while (currX != startX || currY != startY)
     println(steps/2)
+    array.forEachIndexed { y, lineArray ->
+        var line = ""
+        lineArray.forEachIndexed { x, c ->
+            if (pipePositions.contains(Pair(x, y))) {
+                line += '0'
+            } else {
+                if (c == '.') {
+                    line += "+"
+                } else {
+                    line += ' '
+                }
+            }
+        }
+        println(line)
+    }
 }
