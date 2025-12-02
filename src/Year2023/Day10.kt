@@ -25,6 +25,16 @@ fun main() {
         'F' to mapF,
     )
 
+    val mapOfPipesToAscii = mapOf(
+        '.' to ' ',
+        '|' to '|',
+        '-' to '─',
+        'L' to '└',
+        'J' to '┘',
+        '7' to '┐',
+        'F' to '┌',
+    )
+
     val mapDirection = mapOf(
         "N" to Pair(0, -1),
         "S" to Pair(0, 1),
@@ -74,16 +84,18 @@ fun main() {
         pipePositions.add(Pair(currX, currY))
     } while (currX != startX || currY != startY)
     println(steps/2)
+    // part 2
+//    val arrayEnclosed = Array(array.size) { Array(array[0].size) {false} }
     array.forEachIndexed { y, lineArray ->
         var line = ""
         lineArray.forEachIndexed { x, c ->
             if (pipePositions.contains(Pair(x, y))) {
-                line += '0'
+                line += mapOfPipesToAscii[c]
             } else {
                 if (c == '.') {
-                    line += "+"
+                    line += " "
                 } else {
-                    line += ' '
+                    line += 'x'
                 }
             }
         }
