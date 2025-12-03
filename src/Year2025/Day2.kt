@@ -19,4 +19,39 @@ fun main() {
         }
     }
     println(count)
+    count = 0
+    // part 2
+    lines.forEach { line ->
+        val ranges = line.split("-")
+        for (id in ranges[0].toLong()..ranges[1].toLong()) {
+            val idString = id.toString()
+            val length = idString.length
+            // testing all possible ways to split a string to same sized chunks
+            if (length == 2) {
+                if (idString[0] == idString[1]) {
+                    count += id
+                    continue
+                }
+            }
+            for (numberOfChunks in 2..length) {
+                if (length % numberOfChunks > 0) continue
+                // going through all chunks
+                var invalid = true
+                val chunkSize = length / numberOfChunks
+                for (i in 0..numberOfChunks - 2) {
+                    val chunk1 = idString.substring((i)*chunkSize, (i+1)*chunkSize)
+                    val chunk2 = idString.substring((i+1)*chunkSize, (i+2)*chunkSize)
+                    if (chunk1 != chunk2) {
+                        invalid = false
+                        break
+                    }
+                }
+                if (invalid) {
+                    count += id
+                    break
+                }
+            }
+        }
+    }
+    println(count)
 }
