@@ -18,4 +18,21 @@ fun main() {
     }
 
     println(freshCount)
+    // part 2
+    val freshRangesMinimized = freshRanges.sortedBy { it.first }.toMutableList() // sort by the start
+    var i = 0
+    // find two overlapping ranges and merge them into one
+    while (i < freshRangesMinimized.size - 1) {
+        val range1 = freshRangesMinimized[i]
+        val range2 = freshRangesMinimized[i + 1]
+        if (range1.last >= range2.first) {
+            val rangeEnd = if (range1.last > range2.last) range1.last else range2.last
+            freshRangesMinimized[i] = LongRange(range1.first, rangeEnd)
+            freshRangesMinimized.removeAt(i + 1)
+        } else {
+            i++
+        }
+    }
+    // sum of all the ranges magnitudes
+    println(freshRangesMinimized.sumOf { it.last - it.first + 1 })
 }
